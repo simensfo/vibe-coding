@@ -35,7 +35,6 @@ describe('formatCompact', () => {
         throw new Error('Intl not supported');
       })
       .mockName('MockNumberFormat') as unknown as typeof Intl.NumberFormat;
-    // @ts-expect-error overriding for test
     Intl.NumberFormat = ThrowingNumberFormat;
 
     const value = 1234;

@@ -21,7 +21,10 @@ afterEach(() => {
 
 describe('fetchHiscore', () => {
   it('returns data when the request succeeds', async () => {
-    const payload: HiscoreResponse = { magic: { level: 1, rank: 1, xp: 1 } } as HiscoreResponse;
+    const payload: HiscoreResponse = {
+      name: 'Player',
+      skills: [{ id: 1, name: 'Magic', level: 1, xp: 1, rank: 1 }],
+    };
     const fetchMock = stubFetch(mockJsonResponse(payload));
 
     const data = await fetchHiscore('Player');
@@ -48,7 +51,6 @@ describe('fetchQuests', () => {
   it('delegates to the quests endpoint and returns parsed data', async () => {
     const payload: RuneMetricsQuestsResponse = {
       quests: [],
-      loggedIn: true,
     };
     const fetchMock = stubFetch(mockJsonResponse(payload));
 

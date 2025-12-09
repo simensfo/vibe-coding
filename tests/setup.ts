@@ -25,7 +25,7 @@ vi.mock('next/headers', () => ({
   cookies: cookiesMock,
 }));
 
-vi.mock('@/app/globals.css', () => ({}), { virtual: true });
+vi.mock('@/app/globals.css', () => ({}));
 
 // re-export for convenience in tests
 export const mockedHeaders = headersMock;
