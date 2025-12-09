@@ -8,6 +8,13 @@ export default defineConfig({
     include: ['**/*.test.ts', '**/*.test.tsx'],
     exclude: ['node_modules', '.next', 'dist'],
     root: import.meta.dirname,
+    coverage: {
+      provider: 'v8',
+      reporter: ['text', 'lcov'],
+      reportsDirectory: './coverage',
+      include: ['src/**/*.{ts,tsx}'],
+      exclude: ['**/*.d.ts', 'src/app/api/**', 'src/app/(.*)/page.tsx', 'src/app/layout.tsx'],
+    },
   },
   resolve: {
     alias: {

@@ -9,6 +9,7 @@
     "lint": "eslint . --max-warnings=0",
     "format": "prettier --write .",
     "test": "vitest",
+    "test:coverage": "vitest run --coverage",
     "prepare": "husky"
   },
   "dependencies": {
@@ -29,7 +30,7 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "@netlify/plugin-nextjs": "^5",
-    "vitest": "^2",
+    "vitest": "^4.0.15",
     "husky": "^9",
     "lint-staged": "^15"
   },
