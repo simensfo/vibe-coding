@@ -21,38 +21,38 @@ source of truth for workflows, architecture, and pitfalls.
 - Coverage: `bun run test:coverage` (thresholds in `vitest.config.ts`).
 
 Key configs:
-- `/Users/simensfo/devel/vibe-coding/tsconfig.json`: `@/*` alias -> `src/*`.
-- `/Users/simensfo/devel/vibe-coding/vitest.config.ts`: jsdom, coverage thresholds.
-- `/Users/simensfo/devel/vibe-coding/tests/setup.ts`: Next.js mocks.
-- `/Users/simensfo/devel/vibe-coding/next.config.ts`: remote image domains.
+- `tsconfig.json`: `@/*` alias -> `src/*`.
+- `vitest.config.ts`: jsdom, coverage thresholds.
+- `tests/setup.ts`: Next.js mocks.
+- `next.config.ts`: remote image domains.
 
 Environment variables:
 - `NEXT_PUBLIC_BASE_URL` (optional): overrides inferred base URL for internal API
-  requests in `/Users/simensfo/devel/vibe-coding/src/app/group-iron/page.tsx`.
+  requests in `src/app/group-iron/page.tsx`.
 - Secrets: place in `.env.local` (never committed).
 
 ## Architecture & Data Flow
 This is a Next.js App Router project.
 
 Core routes:
-- `/Users/simensfo/devel/vibe-coding/src/app/page.tsx`: RS3 progress search.
-- `/Users/simensfo/devel/vibe-coding/src/app/@results/page.tsx`: parallel route slot.
-- `/Users/simensfo/devel/vibe-coding/src/app/group-iron/page.tsx`: group highscores.
-- `/Users/simensfo/devel/vibe-coding/src/app/api/**`: proxy API routes.
+- `src/app/page.tsx`: RS3 progress search.
+- `src/app/@results/page.tsx`: parallel route slot.
+- `src/app/group-iron/page.tsx`: group highscores.
+- `src/app/api/**`: proxy API routes.
 
 Key components:
-- `/Users/simensfo/devel/vibe-coding/src/app/components/RS3Progress.tsx`: search
+- `src/app/components/RS3Progress.tsx`: search
   form, recent searches, and `@results` slot.
-- `/Users/simensfo/devel/vibe-coding/src/app/components/RS3Results.tsx`: fetches
+- `src/app/components/RS3Results.tsx`: fetches
   hiscores, quests, profile and renders sections.
-- `/Users/simensfo/devel/vibe-coding/src/app/components/RecentSearchesClient.tsx`:
+- `src/app/components/RecentSearchesClient.tsx`:
   client-only cookie persistence.
 
 Key libs:
-- `/Users/simensfo/devel/vibe-coding/src/lib/api.ts`: external API fetchers.
-- `/Users/simensfo/devel/vibe-coding/src/lib/groupIron.ts`: types/guards.
-- `/Users/simensfo/devel/vibe-coding/src/lib/format.ts`: display formatting.
-- `/Users/simensfo/devel/vibe-coding/src/lib/icons.ts`: skill icon map.
+- `src/lib/api.ts`: external API fetchers.
+- `src/lib/groupIron.ts`: types/guards.
+- `src/lib/format.ts`: display formatting.
+- `src/lib/icons.ts`: skill icon map.
 
 Mermaid flow (RS3 profile page):
 ```mermaid
@@ -93,7 +93,7 @@ sequenceDiagram
 3. Identify touch points using `rg` and file map above.
 4. Prefer Server Components; only add `"use client"` when required.
 5. If adding data fetch:
-   - Keep fetch logic in `/Users/simensfo/devel/vibe-coding/src/lib/api.ts` or
+   - Keep fetch logic in `src/lib/api.ts` or
      a new `src/lib/*` module.
    - Add type guards for external responses when possible.
    - Use `next: { revalidate: <seconds> }` for caching.
@@ -109,8 +109,8 @@ Agent collaboration checklist:
 
 ## Testing & Quality Gates
 - Unit and component tests are in place alongside sources.
-- The test harness mocks Next APIs in `/Users/simensfo/devel/vibe-coding/tests/setup.ts`.
-- Coverage thresholds are enforced in `/Users/simensfo/devel/vibe-coding/vitest.config.ts`.
+- The test harness mocks Next APIs in `tests/setup.ts`.
+- Coverage thresholds are enforced in `vitest.config.ts`.
 - Use `bun run test:coverage` when changing core data paths or utilities.
 
 Mocking pattern example:
@@ -130,18 +130,18 @@ Expected behaviors:
 - Group Iron API can return HTML or non-JSON; proxy validates.
 
 Safe patterns:
-- Always tolerate `null` from fetchers in `/Users/simensfo/devel/vibe-coding/src/lib/api.ts`.
-- Use type guards for upstream JSON (see `/Users/simensfo/devel/vibe-coding/src/lib/groupIron.ts`).
+- Always tolerate `null` from fetchers in `src/lib/api.ts`.
+- Use type guards for upstream JSON (see `src/lib/groupIron.ts`).
 - Prefer mocking external fetch in tests to avoid flakiness.
 
 Extending APIs:
-- Add new API route under `/Users/simensfo/devel/vibe-coding/src/app/api`.
+- Add new API route under `src/app/api`.
 - Validate inputs and response shape before returning JSON.
 - Add tests next to the route (`route.test.ts`).
 
 ## Deployment & Ops Notes
 Netlify:
-- Build command: `npm run build` (see `/Users/simensfo/devel/vibe-coding/netlify.toml`).
+- Build command: `npm run build` (see `netlify.toml`).
 - Publish directory: `.next`.
 - Next.js plugin: `@netlify/plugin-nextjs`.
 
@@ -153,7 +153,7 @@ Post-deploy smoke test:
 
 ## Troubleshooting & FAQs
 - Results not showing in `/`:
-  - Confirm `@results` slot exists at `/Users/simensfo/devel/vibe-coding/src/app/@results/page.tsx`.
+  - Confirm `@results` slot exists at `src/app/@results/page.tsx`.
   - Ensure `rsn` query param is present and trimmed.
 - Recent searches not persisting:
   - Confirm `RecentSearchesClient` renders and `document.cookie` is set.
@@ -165,12 +165,12 @@ Post-deploy smoke test:
 ## Where To Look
 | Task | File |
 | --- | --- |
-| RS3 main page | `/Users/simensfo/devel/vibe-coding/src/app/page.tsx` |
-| Results slot | `/Users/simensfo/devel/vibe-coding/src/app/@results/page.tsx` |
-| RS3 search form | `/Users/simensfo/devel/vibe-coding/src/app/components/RS3Progress.tsx` |
-| Fetchers | `/Users/simensfo/devel/vibe-coding/src/lib/api.ts` |
-| Group Iron page | `/Users/simensfo/devel/vibe-coding/src/app/group-iron/page.tsx` |
-| Group Iron API | `/Users/simensfo/devel/vibe-coding/src/app/api/groups/scores/route.ts` |
-| Test setup | `/Users/simensfo/devel/vibe-coding/tests/setup.ts` |
-| Vitest config | `/Users/simensfo/devel/vibe-coding/vitest.config.ts` |
-| Netlify config | `/Users/simensfo/devel/vibe-coding/netlify.toml` |
+| RS3 main page | `src/app/page.tsx` |
+| Results slot | `src/app/@results/page.tsx` |
+| RS3 search form | `src/app/components/RS3Progress.tsx` |
+| Fetchers | `src/lib/api.ts` |
+| Group Iron page | `src/app/group-iron/page.tsx` |
+| Group Iron API | `src/app/api/groups/scores/route.ts` |
+| Test setup | `tests/setup.ts` |
+| Vitest config | `vitest.config.ts` |
+| Netlify config | `netlify.toml` |
